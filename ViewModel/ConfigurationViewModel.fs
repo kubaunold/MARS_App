@@ -1,4 +1,6 @@
-﻿namespace ViewModel
+﻿module MARSApp.ViewModel.ConfigurationViewModel
+
+open MARSApp.ViewModel.ViewModelBase
 
 type ConfigurationRecord = 
     {

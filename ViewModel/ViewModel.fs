@@ -1,5 +1,8 @@
-﻿namespace ViewModel
+﻿module MARSApp.ViewModel.ViewModel
 
+open MARSApp.ViewModel.ViewModelBase
+open MARSApp.ViewModel.ConfigurationViewModel
+open MARSApp.ViewModel.OptionViewModel
 open System.Collections.ObjectModel
 
 type ViewModel() =
@@ -10,6 +13,7 @@ type ViewModel() =
 
     let data                    = ObservableCollection<ConfigurationViewModel>()
     let calculationParameters   = ObservableCollection<ConfigurationViewModel>()
+    let options                 = ObservableCollection<OptionViewModel>()
 
     (* add some dummy data rows *)
     do
@@ -52,7 +56,8 @@ type ViewModel() =
     member this.Data = data
     member this.CalculationParameters = calculationParameters
 
-
+    (* Options *)
+    member this.Options = options
 
 
 

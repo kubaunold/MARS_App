@@ -1,4 +1,4 @@
-﻿namespace ViewModel
+﻿module MARSApp.ViewModel.SimpleCommand
 
 open System.Windows.Input
 open System

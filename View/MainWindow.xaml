@@ -130,8 +130,8 @@
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>  <!--market parameters-->
-                            <RowDefinition Height="Auto"/>  <!--config parameters-->
+                            <RowDefinition Height="Auto"/>  <!--options valued by Black-Scholes Model-->
+                            <RowDefinition Height="Auto"/>  
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -215,10 +215,127 @@
             <!--Black-Scholes Tab-->
             <TabItem Header="Black-Scholes" >
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <!--market parameters-->
+                            <RowDefinition Height="Auto"/>
+                            <!--config parameters-->
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                    <!--This is where the outline of the entire document will be placed.-->
+                        <!-- Options -->
+                        <materialDesign:Card Grid.Row="6" Grid.ColumnSpan="4" Margin="14,14,14,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="180"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- card header -->
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                   Margin="4" Style="{DynamicResource MaterialDesignTitleTextBlock}" 
+                   Width="120" HorizontalAlignment="Left">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Style="{DynamicResource MaterialDesignToolTip}">
+                                            This module allows to simulate stock prices using Geometric Brownian Motion Simulation and then estimate option price based on BS model.
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                        Options
+                                </TextBlock>
+
+                                <!-- action buttons -->
+                                <StackPanel Grid.Column="0" Grid.Row="1">
+                                    <Button Margin="6,3" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding ClearOptions}" Content="Clear"/>
+                                    <Button Margin="6,3" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding CalculateOptions}" Content="Recalculate all"/>
+                                    <Button Margin="6,3" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding AddOption}" Content="New" Click="Button_Click"/>
+                                </StackPanel>
+
+                                <!-- trades grid -->
+
+                                <Grid Grid.Column="1" Grid.Row="1">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="180"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- table header -->
+
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Width="180" Margin="4" Style="{DynamicResource MaterialDesignBody2TextBlock}" TextAlignment="Left" Text="Option Name"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Width="180" Margin="4" Style="{DynamicResource MaterialDesignBody2TextBlock}" TextAlignment="Left" Text="Maturity"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="3" Width="180" Margin="4" Style="{DynamicResource MaterialDesignBody2TextBlock}" TextAlignment="Left" Text="Currency"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="4" Width="180" Margin="4" Style="{DynamicResource MaterialDesignBody2TextBlock}" TextAlignment="Left" Text="Strike"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="5" Width="160" Margin="4" Style="{DynamicResource MaterialDesignBody2TextBlock}" TextAlignment="Right" Text="BSput"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="6" Width="160" Margin="4" Style="{DynamicResource MaterialDesignBody2TextBlock}" TextAlignment="Right" Text="BSputDelta"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="7" Width="160" Margin="4" Style="{DynamicResource MaterialDesignBody2TextBlock}" TextAlignment="Right" Text="BScall"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="8" Width="160" Margin="4" Style="{DynamicResource MaterialDesignBody2TextBlock}" TextAlignment="Right" Text="BSCallDelta"/>
+
+
+
+                                    <!-- items -->
+                                    <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" ItemsSource="{Binding Options}" >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type vm:OptionViewModel}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="60"/>
+                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="180"/>
+                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="180"/>
+                                                        <ColumnDefinition Width="180"/>
+                                                        <ColumnDefinition Width="180"/>
+                                                        <ColumnDefinition Width="180"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Button Width="Auto" Command="{Binding DataContext.RemoveOption, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3">✖</Button>
+                                                    <TextBox Grid.Column="1" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding OptionName}"/>
+                                                    <TextBox Grid.Column="2" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding Expiry}"/>
+                                                    <TextBox Grid.Column="3" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding Currency}"/>
+                                                    <TextBox Grid.Column="4" TextAlignment="Right" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding Strike, StringFormat=N2}"/>
+                                                    <TextBlock Grid.Column="5" TextAlignment="Right" Margin="0" Padding="10" Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="{Binding BScall, Mode=OneWay, Converter={StaticResource stripOption}}"/>
+                                                    <TextBox Grid.Column="6" TextAlignment="Right" Margin="0" IsReadOnly="True" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding BScallDelta, StringFormat=N2}"/>
+                                                    <!--<TextBlock Grid.Column="6" TextAlignment="Right" Margin="0" Padding="10"  Text="{Binding BScallDelta, Mode=OneWay, Converter={StaticResource stripOption}}"/>-->
+                                                    <TextBlock Grid.Column="7" TextAlignment="Right" Margin="0" Padding="10" Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="{Binding BSput, Mode=OneWay, Converter={StaticResource stripOption}}"/>
+                                                    <TextBox Grid.Column="8" TextAlignment="Right" Margin="0" IsReadOnly="True" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding BSputDelta, StringFormat=N2}"/>
+                                                    <!--<TextBlock Grid.Column="8" TextAlignment="Right" Margin="0" Padding="10"  Text="{Binding BSputDelta, Mode=OneWay, Converter={StaticResource stripOption}}"/>-->
+                                                    <!--<CheckBox Grid.Column="6" Width="Auto" Margin="4" HorizontalAlignment="Center" IsChecked="{Binding CanBeDeferred}"/>-->
+                                                    <!--<TextBox Grid.Column="6" TextAlignment="Center" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding CanBeDeferred}"/>-->
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Grid>
+                        </materialDesign:Card>
+                    </Grid>
+                    
                 </ScrollViewer>
             </TabItem>
+            
+            
             <TabItem Header="Charts">
                 <materialDesign:Card Grid.Row="1" Grid.ColumnSpan="1" Margin="14,14,14,0">
                     <Grid>
