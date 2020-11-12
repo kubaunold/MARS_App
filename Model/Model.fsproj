@@ -14,6 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <WarningsAsErrors>3239;$(WarningsAsErrors)</WarningsAsErrors>
     <Name>Model</Name>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,18 +43,15 @@
   </PropertyGroup>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="OptionModel.fs" />
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="ConfigurationModel.fs" />
+    <Compile Include="OptionModel.fs" />
     <Compile Include="Library1.fs" />
-    <None Include="Script.fsx" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Charting">
       <HintPath>..\packages\FSharp.Charting.2.1.0\lib\net45\FSharp.Charting.dll</HintPath>
-    </Reference>
-    <Reference Include="FSharp.Core">
-      <HintPath>..\packages\FSharp.Core.4.7.1\lib\net45\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics">
       <HintPath>..\packages\MathNet.Numerics.4.12.0\lib\net461\MathNet.Numerics.dll</HintPath>

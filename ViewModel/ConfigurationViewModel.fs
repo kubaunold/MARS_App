@@ -1,15 +1,8 @@
 ﻿module MARSApp.ViewModel.ConfigurationViewModel
 
 open MARSApp.ViewModel.ViewModelBase
+open MARSApp.Model.ConfigurationModel
 
-type ConfigurationRecord = 
-    {
-        Key : string
-        Value : string
-    }
-    
-type DataConfiguration = Map<string, string>
-type CalculationConfiguration = Map<string, string>
 
 type ConfigurationViewModel( configRec : ConfigurationRecord) = 
     inherit ViewModelBase()

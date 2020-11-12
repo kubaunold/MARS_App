@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MARSApp.ViewModel;
+
 namespace View
 {
     /// <summary>
@@ -23,7 +25,17 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel.ViewModel();
+
+
+			DataContext = new ViewModel.ViewModel();
         }
+
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
     }
+
+
+
 }

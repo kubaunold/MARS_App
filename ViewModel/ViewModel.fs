@@ -3,6 +3,10 @@
 open MARSApp.ViewModel.ViewModelBase
 open MARSApp.ViewModel.ConfigurationViewModel
 open MARSApp.ViewModel.OptionViewModel
+open MARSApp.ViewModel.SimpleCommand
+
+open MARSApp.Model.OptionModel
+
 open System.Collections.ObjectModel
 
 type ViewModel() =
@@ -13,7 +17,11 @@ type ViewModel() =
 
     let data                    = ObservableCollection<ConfigurationViewModel>()
     let calculationParameters   = ObservableCollection<ConfigurationViewModel>()
-    let options                 = ObservableCollection<OptionViewModel>()
+    //let options                 = ObservableCollection<OptionViewModel>()
+
+    //let getDataConfiguration () = data |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
+    //let getCalculationConfiguration () = calculationParameters |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
+
 
     (* add some dummy data rows *)
     do
@@ -46,6 +54,20 @@ type ViewModel() =
 
 
 
+    //let calculateOptionsFun _ = do
+    //        options |> Seq.iter(fun option -> option.Calculate(getDataConfiguration (), getCalculationConfiguration ()))
+    //        //refreshSummary()
+
+    //let calculateOptions = SimpleCommand calculateOptionsFun
+    //let addOption = SimpleCommand(fun _ -> 
+    //        let currentConfig = getCalculationConfiguration ()
+    //        OptionRecord.Random currentConfig |> OptionViewModel |> options.Add
+    //        )
+
+
+
+
+
     (* Portolio's summary *)
     member this.Summary = summary
 
@@ -56,8 +78,14 @@ type ViewModel() =
     member this.Data = data
     member this.CalculationParameters = calculationParameters
 
+    (* commands *)
+    //member this.AddOption = addOption
+    ////member this.RemoveOption = removeOption
+    ////member this.ClearOptions = clearOptions
+    //member this.CalculateOptions = calculateOptions
+
     (* Options *)
-    member this.Options = options
+    //member this.Options = options
 
 
 
