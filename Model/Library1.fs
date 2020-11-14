@@ -7,6 +7,7 @@ module Distributions =
     let variance = normal.Variance
     let stddev = normal.StdDev
 
+
     normal.Sample() |> ignore
 
     for a in 1..5 do
