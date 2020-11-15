@@ -7,4 +7,4 @@ type ConfigurationRecord =
     }
     
 type MarketData = Map<string, string>
-type CalculationConfiguration = Map<string, string>
+type CalculationParameters = Map<string, string>

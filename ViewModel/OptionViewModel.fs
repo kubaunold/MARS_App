@@ -10,6 +10,9 @@ type OptionViewModel(input : OptionRecord) =
 
     let mutable userInput = input
 
+    // Result of option valuation using BS_Model
+    let mutable value : float option = None
+
     member this.OptionName 
         with get() = userInput.OptionName
         and set(x) = 
@@ -34,72 +37,32 @@ type OptionViewModel(input : OptionRecord) =
             userInput <- {userInput with CallOrPutFlag = x}
             base.Notify("CallOrPutFlag")
 
+    member this.Value
+        with get() = value
+        and set(x) = 
+            value <- x
+            base.Notify("Value")
+
     (* Invoke the option valuation using Black-Scholes Model *)
-    member this.Calculate()
-
-
-    member this.Simulate(data : DataConfiguration, calculationParameters : CalculationConfiguration) = 
-        //capture inputs
-        let optionInputs : OptionValuationInputs = 
-            {
-                OptionType = 
-                         {
-                             OptionName  = this.OptionName
-                             Expiry      = this.Expiry
-                             Currency    = this.Currency
-                             Strike      = this.Strike
-                         }
-                Data = data
-                CalculationsParameters = calculationParameters
-            }
-        let calc = OptionValuationModel(optionInputs).SimulateGBM()
-        calc
-
-
-    // Invoke the valuation based on user input
-    member this.Calculate(data : DataConfiguration, calculationParameters : CalculationConfiguration) = 
+    member this.Calculate(marketData: MarketData, calculationParameters: CalculationParameters) =
         
-        //capture inputs
-        let optionInputs : OptionValuationInputs = 
+        // capture inputs
+        let optionValuationInputs: OptionValuationInputs =
             {
-                OptionType = 
-                         {
-                             OptionName  = this.OptionName
-                             Expiry      = this.Expiry
-                             Currency    = this.Currency
-                             Strike      = this.Strike
-                         }
-                Data = data
-                CalculationsParameters = calculationParameters
+                Option =
+                    {
+                        OptionName      = this.OptionName
+                        Expiry          = this.Expiry
+                        Strike          = this.Strike
+                        CallOrPutFlag   = this.CallOrPutFlag
+                    }
+                MarketData              = marketData
+                CalculationParameters   = calculationParameters
+                UnderlyingAssetPrice    = 5.
             }
-        //calculate
-        let calcTuple  = OptionValuationModel(optionInputs).Calculate()
 
-        let BScall = (match calcTuple with (a,_,_,_,_) -> a)
-        let BScallDelta = (match calcTuple with (_,b,_,_,_) -> b)
-        let BSput = (match calcTuple with (_,_,c,_,_) -> c)
-        let BSputDelta = (match calcTuple with (_,_,_,d,_) -> d)
+        // run Black-Scholes model
+        let optionPrice = OptionValutaionModel(optionValuationInputs).BlackScholes()
 
-        let gbm = (match calcTuple with (_,_,_,_,e) -> e)
-
-        //do
-        //    let ls = LiveCharts.Wpf.LineSeries()
-        //    let series = gbm
-        //    ls.Values <- LiveCharts.ChartValues<float> series
-        //    chartSeries.Add(ls)
-
-        
-
-
-        //present to the user
-        this.BScall <- Option.Some (BScall)
-        this.BScallDelta <- BScallDelta
-        this.BSput <- Option.Some (BSput)
-        this.BSputDelta <- BSputDelta
-
-    //type ChartViewModel(input:ChartInputs) =
-    //    inherit ViewModelBase()
-
-    //    member this.SimulateGBM(data : DataConfiguration, calculationParameters : CalculationConfiguration) =
-    //        let calc = ChartValuationModel(input).SimulateGBM()
-    //        calc
+        // present to user
+        this.Value <- Option.Some(optionPrice)

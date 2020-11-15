@@ -2,6 +2,7 @@
 module Distributions =
 
     open MathNet.Numerics.Distributions
+
     let normal = new Normal(0.0, 1.0)
     let mean = normal.Mean
     let variance = normal.Variance
@@ -14,6 +15,10 @@ module Distributions =
         printf "%d" a
 
 module BlackScholesQuantitatioveFinanceModel =
+    open MathNet.Numerics.Distributions
+
+    let a = Normal.CDF(0., 1., 1.)
+
     let pow x n = exp(n * log(x))
     type PutCallFlag = Put | Call
     /// Cumulative distribution function
