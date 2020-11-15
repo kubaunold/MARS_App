@@ -6,5 +6,5 @@ type ConfigurationRecord =
         Value : string
     }
     
-type DataConfiguration = Map<string, string>
+type MarketData = Map<string, string>
 type CalculationConfiguration = Map<string, string>
