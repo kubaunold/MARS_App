@@ -11,6 +11,10 @@ open MathNet.Numerics.Distributions
 type CallOrPutFlag =
     | Call
     | Put
+    override this.ToString() =
+               match this with
+               | Call -> "Call"
+               | Put -> "Put"
 
 
 type OptionRecord =

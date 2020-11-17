@@ -70,7 +70,6 @@ type ViewModel() =
         OptionRecord.Random currentConfig |> OptionViewModel |> options.Add
         )
 
-
     (* Portolio's summary *)
     member this.Summary = summary
 
