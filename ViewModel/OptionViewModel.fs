@@ -11,7 +11,8 @@ type OptionViewModel(input : OptionRecord) =
     let mutable userInput = input
 
     // Result of option valuation using BS_Model
-    let mutable value : float option = None
+    //let mutable value : float option = None
+    let mutable value : float = 0.0
 
     member this.OptionName 
         with get() = userInput.OptionName
@@ -65,4 +66,7 @@ type OptionViewModel(input : OptionRecord) =
         let optionPrice = OptionValutaionModel(optionValuationInputs).BlackScholes()
 
         // present to user
-        this.Value <- Option.Some(optionPrice)
+        //this.Value <- Option.Some(optionPrice)
+        this.Value <- optionPrice
+        do
+            printf "Siemka"

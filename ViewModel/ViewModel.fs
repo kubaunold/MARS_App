@@ -17,10 +17,10 @@ type ViewModel() =
 
     let data                    = ObservableCollection<ConfigurationViewModel>()
     let calculationParameters   = ObservableCollection<ConfigurationViewModel>()
-    //let options                 = ObservableCollection<OptionViewModel>()
+    let options                 = ObservableCollection<OptionViewModel>()
 
     //let getDataConfiguration () = data |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
-    //let getCalculationConfiguration () = calculationParameters |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
+    let getCalculationConfiguration () = calculationParameters |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
 
 
     (* add some dummy data rows *)
@@ -65,7 +65,10 @@ type ViewModel() =
     //        )
 
 
-
+    let addOption = SimpleCommand(fun _ -> 
+        let currentConfig = getCalculationConfiguration ()
+        OptionRecord.Random currentConfig |> OptionViewModel |> options.Add
+        )
 
 
     (* Portolio's summary *)
@@ -79,13 +82,13 @@ type ViewModel() =
     member this.CalculationParameters = calculationParameters
 
     (* commands *)
-    //member this.AddOption = addOption
+    member this.AddOption = addOption
     ////member this.RemoveOption = removeOption
     ////member this.ClearOptions = clearOptions
     //member this.CalculateOptions = calculateOptions
 
     (* Options *)
-    //member this.Options = options
+    member this.Options = options
 
 
 
