@@ -45,6 +45,12 @@ type OptionViewModel(input : OptionRecord) =
             value <- x
             base.Notify("Value")
 
+    member this.Temp
+        with get() = userInput.Temp
+        and set(x) = 
+            userInput <- {userInput with Temp = x }
+            base.Notify("Value")
+
     (* Invoke the option valuation using Black-Scholes Model *)
     member this.Calculate(marketData: MarketData, calculationParameters: CalculationParameters) =
         
@@ -57,6 +63,7 @@ type OptionViewModel(input : OptionRecord) =
                         Expiry          = this.Expiry
                         Strike          = this.Strike
                         CallOrPutFlag   = this.CallOrPutFlag
+                        Temp            = this.Temp
                     }
                 MarketData              = marketData
                 CalculationParameters   = calculationParameters

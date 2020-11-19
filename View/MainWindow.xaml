@@ -259,6 +259,7 @@
                                         <ColumnDefinition Width="160"/> <!--maturity-->
                                         <ColumnDefinition Width="80"/>  <!--strike-->
                                         <ColumnDefinition Width="120"/>  <!--valuation-->
+                                        <ColumnDefinition Width="120"/>  <!--temp-->
                                     </Grid.ColumnDefinitions>
 
                                     <!-- table header -->
@@ -280,6 +281,7 @@
                                                         <ColumnDefinition Width="160"/>
                                                         <ColumnDefinition Width="80"/>
                                                         <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition Width="120"/>
                                                     </Grid.ColumnDefinitions>
 
                                                     <Button Width="Auto" Command="{Binding DataContext.RemoveOption, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3">✖</Button>
@@ -289,6 +291,7 @@
                                                     <TextBlock Grid.Column="3" Text="{Binding Expiry}"/>
                                                     <TextBlock Grid.Column="4" Text="{Binding Strike, StringFormat=N2}"/>
                                                     <TextBox Grid.Column="5" Text="{Binding Value, StringFormat=N2}"/>
+                                                    <TextBox Grid.Column="6" Text="{Binding Temp, StringFormat=N2}"/>
                                                     <!--<TextBox Grid.Column="5" Margin="4" Text="{Binding Value, Mode=OneWay, Converter={StaticResource stripOption}}"/>-->
                                                 </Grid>
                                             </DataTemplate>

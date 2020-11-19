@@ -20,10 +20,11 @@ type CallOrPutFlag =
 type OptionRecord =
     (* Model for Option Record. *)
     {
-        OptionName : string
-        Expiry    : DateTime
-        Strike : float
-        CallOrPutFlag: CallOrPutFlag
+        OptionName:     string
+        Expiry:         DateTime
+        Strike:         float
+        CallOrPutFlag:  CallOrPutFlag
+        Temp:           float
     }
 
     (* Simple utility method for creating a random option. *)
@@ -42,6 +43,7 @@ type OptionRecord =
                     Call
                 else
                     Put
+            Temp        = 17.0
         }
 
 
