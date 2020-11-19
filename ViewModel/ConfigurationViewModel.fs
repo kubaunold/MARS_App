@@ -1,7 +1,7 @@
-﻿module MARSApp.ViewModel.ConfigurationViewModel
-
-open MARSApp.ViewModel.ViewModelBase
-open MARSApp.Model.ConfigurationModel
+﻿//module MARSApp.ViewModel.ConfigurationViewModel
+namespace ViewModel
+//open MARSApp.ViewModel.ViewModelBase
+//open MARSApp.Model.ConfigurationModel
 
 
 type ConfigurationViewModel( configRec : ConfigurationRecord) = 

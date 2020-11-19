@@ -1,6 +1,6 @@
-﻿module MARSApp.Model.OptionModel
-
-open MARSApp.Model.ConfigurationModel
+﻿//module MARSApp.Model.OptionModel
+namespace Model
+//open MARSApp.Model.ConfigurationModel
 open System // used for DateTime
 open MathNet.Numerics.Distributions
 

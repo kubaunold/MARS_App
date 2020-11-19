@@ -1,8 +1,8 @@
-﻿module MARSApp.ViewModel.OptionViewModel
-
-open MARSApp.ViewModel.ViewModelBase
-open MARSApp.Model.OptionModel
-open MARSApp.Model.ConfigurationModel
+﻿//module MARSApp.ViewModel.OptionViewModel
+namespace ViewModel
+//open MARSApp.ViewModel.ViewModelBase
+//open MARSApp.Model.OptionModel
+//open MARSApp.Model.ConfigurationModel
 
 //Representation of an Option to the UI
 type OptionViewModel(input : OptionRecord) = 

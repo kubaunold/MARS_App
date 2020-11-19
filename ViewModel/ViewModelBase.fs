@@ -1,4 +1,5 @@
-﻿module MARSApp.ViewModel.ViewModelBase
+﻿//module MARSApp.ViewModel.ViewModelBase
+namespace ViewModel
 
 open System.ComponentModel
 open Microsoft.FSharp.Quotations.Patterns

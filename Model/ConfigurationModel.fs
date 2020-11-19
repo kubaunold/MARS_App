@@ -1,4 +1,5 @@
-﻿module MARSApp.Model.ConfigurationModel
+﻿//module MARSApp.Model.ConfigurationModel
+namespace Model
 
 type ConfigurationRecord = 
     {
