@@ -174,7 +174,7 @@
                                     <TextBlock Grid.Row="1" Grid.Column="1" Width="140" Margin="4" FontWeight="Bold" Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="Value"/>
 
                                     <!-- items -->
-                                    <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Data}" Margin="6">
+                                    <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding MarketDataParameters}" Margin="6">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate >
                                                 <StackPanel Orientation="Horizontal">
@@ -239,10 +239,10 @@
 
                                 <!-- action buttons -->
                                 <StackPanel Grid.Column="0" Grid.Row="1">
+                                    <!--<Button Margin="6,3" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding AddOption}" Content="New" Click="Button_Click"/>-->
                                     <Button Margin="6" Command="{Binding AddOption}" Content="Add New"/>
                                     <Button Margin="6" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding ClearOptions}" Content="Clear"/>
-                                    <Button Margin="6" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding CalculateOptions}" Content="Recalculate all"/>
-                                    <!--<Button Margin="6,3" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding AddOption}" Content="New" Click="Button_Click"/>-->
+                                    <Button Margin="6" Style="{DynamicResource MaterialDesignRaisedDarkButton}" Command="{Binding RecalculateOptions}" Content="Recalculate all"/>
                                 </StackPanel>
 
                                 <!-- options grid -->
@@ -271,7 +271,7 @@
                                     <!-- List with options -->
                                     <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" ItemsSource="{Binding Options}" >
                                         <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
+                                            <DataTemplate DataType="{x:Type vm:OptionViewModel}">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="60"/>
@@ -282,7 +282,7 @@
                                                         <ColumnDefinition Width="120"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <!--<Button Width="Auto" Command="{Binding DataContext.RemoveOption, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3">✖</Button>-->
+                                                    <Button Width="Auto" Command="{Binding DataContext.RemoveOption, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3">✖</Button>
                                                     <!--<TextBox Grid.Column="1" Text="{Binding OptionName}"/>-->
                                                     <TextBlock Grid.Column="1" Text="{Binding OptionName}"/>
                                                     <TextBlock Grid.Column="2" Text="{Binding Type}"/>

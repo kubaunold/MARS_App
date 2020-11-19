@@ -16,23 +16,23 @@ type ViewModel() =
     let summary = 10
     let pieChart = 7
 
-    let data                    = ObservableCollection<ConfigurationViewModel>()
+    let marketDataParameters    = ObservableCollection<ConfigurationViewModel>()
     let calculationParameters   = ObservableCollection<ConfigurationViewModel>()
     let options                 = ObservableCollection<OptionViewModel>()
 
-    //let getDataConfiguration () = data |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
-    let getCalculationConfiguration () = calculationParameters |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
+    let getMarketDataParameters() = marketDataParameters |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
+    let getCalculationParameters() = calculationParameters |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
 
 
     (* add some dummy data rows *)
     do
-        data.Add(ConfigurationViewModel { Key = "FX::USDPLN"; Value = "3.76" })
-        data.Add(ConfigurationViewModel { Key = "FX::USDEUR"; Value = "0.87" })
-        data.Add(ConfigurationViewModel { Key = "FX::EURGBP"; Value = "0.90" })
-        data.Add(ConfigurationViewModel { Key = "interestRate::percentage"; Value = "5" })
-        data.Add(ConfigurationViewModel { Key = "stock::price"; Value = "4.20" })
-        //data.Add(ConfigurationViewModel { Key = "stock::drift"; Value = "4.20" }) //thats interestrate
-        data.Add(ConfigurationViewModel { Key = "stock::volatility"; Value = "0.20" })
+        marketDataParameters.Add(ConfigurationViewModel { Key = "FX::USDPLN"; Value = "3.76" })
+        marketDataParameters.Add(ConfigurationViewModel { Key = "FX::USDEUR"; Value = "0.87" })
+        marketDataParameters.Add(ConfigurationViewModel { Key = "FX::EURGBP"; Value = "0.90" })
+        marketDataParameters.Add(ConfigurationViewModel { Key = "interestRate::percentage"; Value = "5" })
+        marketDataParameters.Add(ConfigurationViewModel { Key = "stock::price"; Value = "4.20" })
+        //marketDataParameters.Add(ConfigurationViewModel { Key = "stock::drift"; Value = "4.20" }) //thats interestrate
+        marketDataParameters.Add(ConfigurationViewModel { Key = "stock::volatility"; Value = "0.20" })
 
         calculationParameters.Add(ConfigurationViewModel { Key = "monteCarlo::runs"; Value = "100" })
         calculationParameters.Add(ConfigurationViewModel { Key = "valuation::baseCurrency"; Value = "USD" })
@@ -65,11 +65,15 @@ type ViewModel() =
     //        OptionRecord.Random currentConfig |> OptionViewModel |> options.Add
     //        )
 
-
+    (* option commands *)
     let addOption = SimpleCommand(fun _ -> 
-        let currentConfig = getCalculationConfiguration ()
+        let currentConfig = getCalculationParameters()
         OptionRecord.Random currentConfig |> OptionViewModel |> options.Add
         )
+    // ":?>" operator converts to a type that's lower in hierarchy
+    let removeOption        = SimpleCommand(fun option -> options.Remove(option :?> OptionViewModel) |> ignore)
+    let clearOptions        = SimpleCommand(fun _ -> options.Clear())
+    let recalculateOptions  = SimpleCommand(fun _ -> options |> Seq.iter(fun option -> option.Calculate(getMarketDataParameters(), getCalculationParameters())))
 
     (* Portolio's summary *)
     member this.Summary = summary
@@ -78,14 +82,14 @@ type ViewModel() =
     member this.PieChart = pieChart
 
     (* Parameters *)
-    member this.Data = data
+    member this.MarketDataParameters = marketDataParameters
     member this.CalculationParameters = calculationParameters
 
     (* commands *)
     member this.AddOption = addOption
-    ////member this.RemoveOption = removeOption
-    ////member this.ClearOptions = clearOptions
-    //member this.CalculateOptions = calculateOptions
+    member this.RemoveOption = removeOption
+    member this.ClearOptions = clearOptions
+    member this.RecalculateOptions = recalculateOptions
 
     (* Options *)
     member this.Options = options
