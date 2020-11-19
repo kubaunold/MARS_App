@@ -100,7 +100,39 @@ module BlackScholesQuantitatioveFinanceModel =
 //    do opp |> Seq.iter (optionPricePut.Points.Add >> ignore)
 
 
+module test=
 
+    type OptionValutionModel (inputs: OptionValuationInputs) =
+        
+        (* Black-Scholes for Option Valuation
+        Parameters:
+            call_or_put_flag (CallOrPutFlag):
+                Flag that determines whether this option is put or call
+            s0 (float): Underlying asset price at the time being
+            k (float): strike price
+            t (float): expiry date (counted in years from now on, e.g. 1.5)
+            r (float): risk free rate (e.g. 0.05 means 5%)
+            v (float): volatility (e.g. 0.2 means 20%)
+        *)
+        let call_or_put_flag = inputs.Option.CallOrPutFlag
+        let s0  = inputs.UnderlyingAssetPrice
+        let k   = inputs.Option.Strike
+        let t   = inputs.Option.Expiry.Subtract(System.DateTime.Now.Date).TotalDays/365.
+        let r   = match inputs.MarketData.TryFind "riskFreeInterestRate::percentage" with
+                    | Some rate -> float rate
+                    | None -> 0.05  // default 5% interest rate
+        let v   = match inputs.MarketData.TryFind "stock::volatility" with
+                    | Some volatility -> float volatility
+                    | None -> 0.20   // default 20% volatility
+        
+        member this.BlackScholes() : float =
+            let d1 = (log(s0/k) + (r + v**2./2.)*t) / (v*sqrt(t)) 
+            let d2 = d1 - v*sqrt(sqrt(t))
+            //match call_or_put_flag with
+            //| Call -> s0*Normal.CDF(0., 1., d1) - k*exp(-r*t)*Normal.CDF(0., 1., d2)
+            //| Put -> Normal.CDF(0., 1., -d2)*k*exp(-r*t) - Normal.CDF(0., 1., -d1)*s0
+    
+            17.1
 
 
 

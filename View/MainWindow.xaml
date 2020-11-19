@@ -48,7 +48,7 @@
             <Setter Property="MinWidth" Value="60px"/>
             <Setter Property="UseLayoutRounding" Value="True"/>
         </Style>
-        <!--<vm:OptionDoubleToDoubleConverter x:Key="stripOption"/>-->
+        <vm:OptionDoubleToDoubleConverter x:Key="stripOption"/>
     </Window.Resources>
 
     <Grid x:Name="ParentGrid">
@@ -290,7 +290,8 @@
                                                     <TextBlock Grid.Column="2" Text="{Binding Type}"/>
                                                     <TextBlock Grid.Column="3" Text="{Binding Expiry}"/>
                                                     <TextBlock Grid.Column="4" Text="{Binding Strike, StringFormat=N2}"/>
-                                                    <TextBox Grid.Column="5" Text="{Binding Value, StringFormat=N2}"/>
+                                                    <!--<TextBox Grid.Column="5" Text="{Binding Value, StringFormat=N2}"/>-->
+                                                    <TextBox Grid.Column="5" Text="{Binding Value, Mode=OneWay, Converter={StaticResource str}}"/>
                                                     <TextBox Grid.Column="6" Text="{Binding Temp, StringFormat=N2}"/>
                                                     <!--<TextBox Grid.Column="5" Margin="4" Text="{Binding Value, Mode=OneWay, Converter={StaticResource stripOption}}"/>-->
                                                 </Grid>

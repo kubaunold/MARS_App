@@ -30,9 +30,7 @@ type OptionRecord =
     (* Simple utility method for creating a random option. *)
     static member sysRandom = System.Random()
     static member Random(configuration : CalculationParameters) =
-
         let rnd  = System.Random()
-
         (* Below OptionRecord type  will be returned *)
         {
             OptionName  = sprintf "Option%04d" (OptionRecord.sysRandom.Next(9999))
@@ -56,7 +54,7 @@ type OptionValuationInputs =
         UnderlyingAssetPrice: float
     }
 
-type OptionValutaionModel (inputs: OptionValuationInputs) =
+type OptionValutionModel (inputs: OptionValuationInputs) =
     
     (* Black-Scholes for Option Valuation
     Parameters:
@@ -83,5 +81,9 @@ type OptionValutaionModel (inputs: OptionValuationInputs) =
         let d1 = (log(s0/k) + (r + v**2./2.)*t) / (v*sqrt(t)) 
         let d2 = d1 - v*sqrt(sqrt(t))
         match call_or_put_flag with
-        | Call -> s0*Normal.CDF(0., 1., d1) - k*exp(-r*t)*Normal.CDF(0., 1., d2)
-        | Put -> Normal.CDF(0., 1., -d2)*k*exp(-r*t) - Normal.CDF(0., 1., -d1)*s0
+        | Call -> s0*MathNet.Numerics.Distributions.Normal.CDF(0., 1., d1) - k*exp(-r*t)*MathNet.Numerics.Distributions.Normal.CDF(0., 1., d2)
+        | Put -> MathNet.Numerics.Distributions.Normal.CDF(0., 1., -d2)*k*exp(-r*t) - MathNet.Numerics.Distributions.Normal.CDF(0., 1., -d1)*s0
+
+        //17.1 
+
+

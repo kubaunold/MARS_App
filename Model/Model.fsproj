@@ -10,7 +10,7 @@
     <RootNamespace>Model</RootNamespace>
     <AssemblyName>Model</AssemblyName>
     <UseStandardResourceNames>true</UseStandardResourceNames>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <WarningsAsErrors>3239;$(WarningsAsErrors)</WarningsAsErrors>
     <Name>Model</Name>

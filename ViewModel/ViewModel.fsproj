@@ -1,10 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors>3239;</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="OptionDoubleToDoubleConverter.fs" />
     <Compile Include="SimpleCommand.fs" />
     <Compile Include="ViewModelBase.fs" />
     <Compile Include="ConfigurationViewModel.fs" />
@@ -17,7 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Windows" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="5.0.0" />
+    <PackageReference Update="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
 </Project>
