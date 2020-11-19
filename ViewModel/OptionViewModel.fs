@@ -3,6 +3,7 @@ namespace ViewModel
 //open MARSApp.ViewModel.ViewModelBase
 //open MARSApp.Model.OptionModel
 //open MARSApp.Model.ConfigurationModel
+open Model
 
 //Representation of an Option to the UI
 type OptionViewModel(input : OptionRecord) = 

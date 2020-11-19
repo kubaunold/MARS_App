@@ -1,5 +1,6 @@
 ﻿//module MARSApp.ViewModel.ConfigurationViewModel
 namespace ViewModel
+open Model
 //open MARSApp.ViewModel.ViewModelBase
 //open MARSApp.Model.ConfigurationModel
 

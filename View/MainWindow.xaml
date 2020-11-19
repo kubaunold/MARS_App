@@ -10,6 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
     
 
     mc:Ignorable="d"

@@ -1,11 +1,12 @@
 ﻿//module MARSApp.ViewModel.ViewModel
 namespace ViewModel
+open Model
 //open MARSApp.ViewModel.ViewModelBase
 //open MARSApp.ViewModel.ConfigurationViewModel
 //open MARSApp.ViewModel.OptionViewModel
 //open MARSApp.ViewModel.SimpleCommand
 
-open MARSApp.Model.OptionModel
+//open MARSApp.Model.OptionModel
 
 open System.Collections.ObjectModel
 
