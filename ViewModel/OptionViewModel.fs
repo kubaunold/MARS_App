@@ -74,5 +74,4 @@ type OptionViewModel(input : OptionRecord) =
         // present to user
         this.Value <- Option.Some(optionPrice)
         //this.Value <- optionPrice
-        do
-            printf "Siemka"
+

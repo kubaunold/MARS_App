@@ -16,8 +16,8 @@ type ViewModel() =
     let summary = 10
     let pieChart = 7
 
-    let marketDataParameters    = ObservableCollection<ConfigurationViewModel>()
     let calculationParameters   = ObservableCollection<ConfigurationViewModel>()
+    let marketDataParameters    = ObservableCollection<ConfigurationViewModel>()
     let options                 = ObservableCollection<OptionViewModel>()
 
     let getMarketDataParameters() = marketDataParameters |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
@@ -67,10 +67,11 @@ type ViewModel() =
 
     (* option commands *)
     let addOption = SimpleCommand(fun _ -> 
-        let currentConfig = getCalculationParameters()
-        let optionToAdd = OptionRecord.Random currentConfig |> OptionViewModel
+        let currentCalculationParameters = getCalculationParameters()
+        let currentMarketDataParameters = getMarketDataParameters()
+        let optionToAdd = OptionRecord.Random currentCalculationParameters |> OptionViewModel
+        optionToAdd.Calculate(currentMarketDataParameters, currentCalculationParameters)
         options.Add optionToAdd
-
         )
     // ":?>" operator converts to a type that's lower in hierarchy
     let removeOption        = SimpleCommand(fun option -> options.Remove(option :?> OptionViewModel) |> ignore)
