@@ -68,7 +68,9 @@ type ViewModel() =
     (* option commands *)
     let addOption = SimpleCommand(fun _ -> 
         let currentConfig = getCalculationParameters()
-        OptionRecord.Random currentConfig |> OptionViewModel |> options.Add
+        let optionToAdd = OptionRecord.Random currentConfig |> OptionViewModel
+        options.Add optionToAdd
+
         )
     // ":?>" operator converts to a type that's lower in hierarchy
     let removeOption        = SimpleCommand(fun option -> options.Remove(option :?> OptionViewModel) |> ignore)

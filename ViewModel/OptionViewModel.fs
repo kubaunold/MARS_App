@@ -10,10 +10,8 @@ type OptionViewModel(input : OptionRecord) =
     inherit ViewModelBase()
 
     let mutable userInput = input
-
     // Result of option valuation using BS_Model
     let mutable value : float option = None
-    //let mutable value : float = 0.0
 
     member this.OptionName 
         with get() = userInput.OptionName
