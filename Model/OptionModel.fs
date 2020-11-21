@@ -24,7 +24,7 @@ type OptionRecord =
         Expiry:         DateTime
         Strike:         float
         CallOrPutFlag:  CallOrPutFlag
-        Temp:           float
+        StockPrice:     float
     }
 
     (* Simple utility method for creating a random option. *)
@@ -35,13 +35,13 @@ type OptionRecord =
         {
             OptionName  = sprintf "Option%04d" (OptionRecord.sysRandom.Next(9999))
             Expiry      = (DateTime.Now.AddMonths(OptionRecord.sysRandom.Next(2, 12))).Date
-            Strike      = OptionRecord.sysRandom.NextDouble()
+            Strike      =  60.0 (*OptionRecord.sysRandom.NextDouble() * 60.*)
             CallOrPutFlag = 
                 if rnd.Next()%2 |> System.Convert.ToBoolean then
                     Call
                 else
                     Put
-            Temp        = 17.0
+            StockPrice  = 58.60
         }
 
 
@@ -67,22 +67,28 @@ type OptionValutionModel (inputs: OptionValuationInputs) =
         v (float): volatility (e.g. 0.2 means 20%)
     *)
     let call_or_put_flag = inputs.Option.CallOrPutFlag
-    let s0  = inputs.UnderlyingAssetPrice
+    //let s0  = inputs.UnderlyingAssetPrice
+    let s0  = inputs.Option.StockPrice
     let k   = inputs.Option.Strike
     let t   = inputs.Option.Expiry.Subtract(System.DateTime.Now.Date).TotalDays/365.
     let r   = match inputs.MarketData.TryFind "riskFreeInterestRate::percentage" with
                 | Some rate -> float rate
-                | None -> 0.05  // default 5% interest rate
+                | None -> 0.01  // default 1% interest rate
     let v   = match inputs.MarketData.TryFind "stock::volatility" with
                 | Some volatility -> float volatility
-                | None -> 0.20   // default 20% volatility
+                | None -> 0.30   // default 30% volatility
     
+    // fi(x) is Cumulative Standard! (mean of 0 and st. deviation of 1) Distribution Function aka Standardized CDF
+    let fi x = Normal.CDF(0., 1., x)
+
     member this.BlackScholes() : float =
-        let d1 = (log(s0/k) + (r + v**2./2.)*t) / (v*sqrt(t)) 
-        let d2 = d1 - v*sqrt(sqrt(t))
+        let d1 = ( log(s0/k) + (r+v*v/2.)*t) / (v*sqrt(t))
+        let d2 = d1 - v*sqrt(t)
         match call_or_put_flag with
-        | Call -> 1.(*s0 * Normal.CDF(0., 1., d1) - k*exp(-r*t)* Normal.CDF(0., 1., d2)*)
-        | Put ->  2.(*Normal.CDF(0., 1., -d2)*k*exp(-r*t) - Normal.CDF(0., 1., -d1)*s0*)
+        | Call -> s0*fi(d1) - k*exp(-r*t)*fi(d2)
+        | Put ->  k*exp(-r*t)*fi(-d2) - s0*fi(-d1)
+        //| Call -> 1.
+        //| Put ->  2.
 
         //17.1 
 

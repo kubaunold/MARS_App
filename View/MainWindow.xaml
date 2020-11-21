@@ -255,10 +255,11 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="60"/>  <!--x-->
-                                        <ColumnDefinition Width="100"/> <!--name-->
+                                        <ColumnDefinition Width="120"/> <!--name-->
                                         <ColumnDefinition Width="120"/> <!--type-->
                                         <ColumnDefinition Width="160"/> <!--maturity-->
-                                        <ColumnDefinition Width="80"/>  <!--strike-->
+                                        <ColumnDefinition Width="120"/>  <!--stock price-->
+                                        <ColumnDefinition Width="120"/>  <!--strike-->
                                         <ColumnDefinition Width="120"/>  <!--valuation-->
                                         <ColumnDefinition Width="120"/>  <!--temp-->
                                     </Grid.ColumnDefinitions>
@@ -267,8 +268,9 @@
                                     <TextBlock Grid.Row="0" Grid.Column="1" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Option Name" />
                                     <TextBlock Grid.Row="0" Grid.Column="2" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Type" />
                                     <TextBlock Grid.Row="0" Grid.Column="3" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Maturity" />
-                                    <TextBlock Grid.Row="0" Grid.Column="4" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Strike" />
-                                    <TextBlock Grid.Row="0" Grid.Column="5" Width="Auto"  TextAlignment="Center" FontWeight="Bold" Text="Estimated Value" />
+                                    <TextBlock Grid.Row="0" Grid.Column="4" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Stock Price" />
+                                    <TextBlock Grid.Row="0" Grid.Column="5" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Strike" />
+                                    <TextBlock Grid.Row="0" Grid.Column="6" Width="Auto"  TextAlignment="Center" FontWeight="Bold" Text="Estimated Value" />
 
                                     <!-- List with options -->
                                     <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" ItemsSource="{Binding Options}" >
@@ -277,10 +279,11 @@
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="60"/>
-                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="120"/>
                                                         <ColumnDefinition Width="120"/>
                                                         <ColumnDefinition Width="160"/>
-                                                        <ColumnDefinition Width="80"/>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition Width="120"/>
                                                         <ColumnDefinition Width="120"/>
                                                         <ColumnDefinition Width="120"/>
                                                     </Grid.ColumnDefinitions>
@@ -290,8 +293,9 @@
                                                     <TextBlock Grid.Column="2" Text="{Binding CallOrPutFlag, Converter={StaticResource stripOptionType}}"/>
                                                     <!--<TextBlock Grid.Column="2" Text="{Binding CallOrPutFlag}"/>-->
                                                     <TextBox Grid.Column="3" Text="{Binding Expiry}"/>
-                                                    <TextBlock Grid.Column="4" Text="{Binding Strike, StringFormat=N2}"/>
-                                                    <TextBlock Grid.Column="5" TextAlignment="Center" Text="{Binding Value, Mode=OneWay, Converter={StaticResource stripOption}, StringFormat=N2}"/>
+                                                    <TextBlock Grid.Column="4" Text="{Binding StockPrice, StringFormat=N2}"/>
+                                                    <TextBlock Grid.Column="5" Text="{Binding Strike, StringFormat=N2}"/>
+                                                    <TextBlock Grid.Column="6" TextAlignment="Center" Text="{Binding Value, Mode=OneWay, Converter={StaticResource stripOption}, StringFormat=N2}"/>
                                                     <!--<TextBlock Grid.Column="5" TextAlignment="Center" Text="{Binding Value, StringFormat=N2}"/>-->
                                                 </Grid>
                                             </DataTemplate>
