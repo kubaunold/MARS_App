@@ -49,6 +49,7 @@
             <Setter Property="UseLayoutRounding" Value="True"/>
         </Style>
         <vm:OptionDoubleToDoubleConverter x:Key="stripOption"/>
+        <vm:OptionTypeToStringConverter x:Key="stripOptionType"/>
     </Window.Resources>
 
     <Grid x:Name="ParentGrid">
@@ -267,7 +268,7 @@
                                     <TextBlock Grid.Row="0" Grid.Column="2" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Type" />
                                     <TextBlock Grid.Row="0" Grid.Column="3" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Maturity" />
                                     <TextBlock Grid.Row="0" Grid.Column="4" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Strike" />
-                                    <TextBlock Grid.Row="0" Grid.Column="5" Width="Auto"  TextAlignment="Left" FontWeight="Bold" Text="Estimated Value" />
+                                    <TextBlock Grid.Row="0" Grid.Column="5" Width="Auto"  TextAlignment="Center" FontWeight="Bold" Text="Estimated Value" />
 
                                     <!-- List with options -->
                                     <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" ItemsSource="{Binding Options}" >
@@ -285,15 +286,13 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <Button Width="Auto" Command="{Binding DataContext.RemoveOption, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3">✖</Button>
-                                                    <!--<TextBox Grid.Column="1" Text="{Binding OptionName}"/>-->
-                                                    <TextBlock Grid.Column="1" Text="{Binding OptionName}"/>
-                                                    <TextBlock Grid.Column="2" Text="{Binding Type}"/>
-                                                    <TextBlock Grid.Column="3" Text="{Binding Expiry}"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding OptionName}"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding CallOrPutFlag, Converter={StaticResource stripOptionType}}"/>
+                                                    <!--<TextBlock Grid.Column="2" Text="{Binding CallOrPutFlag}"/>-->
+                                                    <TextBox Grid.Column="3" Text="{Binding Expiry}"/>
                                                     <TextBlock Grid.Column="4" Text="{Binding Strike, StringFormat=N2}"/>
-                                                    <!--<TextBox Grid.Column="5" Text="{Binding Value, StringFormat=N2}"/>-->
-                                                    <TextBox Grid.Column="5" Text="{Binding Value, Mode=OneWay, Converter={StaticResource stripOption}, StringFormat=N2}"/>
-                                                    <TextBox Grid.Column="6" Text="{Binding Temp, StringFormat=N2}"/>
-                                                    <!--<TextBox Grid.Column="5" Margin="4" Text="{Binding Value, Mode=OneWay, Converter={StaticResource stripOption}}"/>-->
+                                                    <TextBlock Grid.Column="5" TextAlignment="Center" Text="{Binding Value, Mode=OneWay, Converter={StaticResource stripOption}, StringFormat=N2}"/>
+                                                    <!--<TextBlock Grid.Column="5" TextAlignment="Center" Text="{Binding Value, StringFormat=N2}"/>-->
                                                 </Grid>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

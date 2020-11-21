@@ -81,8 +81,8 @@ type OptionValutionModel (inputs: OptionValuationInputs) =
         let d1 = (log(s0/k) + (r + v**2./2.)*t) / (v*sqrt(t)) 
         let d2 = d1 - v*sqrt(sqrt(t))
         match call_or_put_flag with
-        | Call -> s0*MathNet.Numerics.Distributions.Normal.CDF(0., 1., d1) - k*exp(-r*t)*MathNet.Numerics.Distributions.Normal.CDF(0., 1., d2)
-        | Put -> MathNet.Numerics.Distributions.Normal.CDF(0., 1., -d2)*k*exp(-r*t) - MathNet.Numerics.Distributions.Normal.CDF(0., 1., -d1)*s0
+        | Call -> 1.(*s0 * Normal.CDF(0., 1., d1) - k*exp(-r*t)* Normal.CDF(0., 1., d2)*)
+        | Put ->  2.(*Normal.CDF(0., 1., -d2)*k*exp(-r*t) - Normal.CDF(0., 1., -d1)*s0*)
 
         //17.1 
 
