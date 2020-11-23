@@ -14,7 +14,7 @@
     
 
     mc:Ignorable="d"
-    Title="MARS App - Market And Risk Simulation Application" Height="700" Width="1517.5">
+    Title="MARS App - Market And Risk Simulation Application" Height="Auto" Width="1200">
     <!--xmlns:model="clr-namespace:ViewModel;assembly=ViewModel"-->
     <!--TextElement.Foreground="{DynamicResource MaterialDesignBody}"-->
     <!--Background="{DynamicResource MaterialDesignPaper}"-->

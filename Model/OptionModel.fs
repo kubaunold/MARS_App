@@ -33,7 +33,7 @@ type OptionRecord =
         let rnd  = System.Random()
         (* Below OptionRecord type  will be returned *)
         {
-            OptionName  = sprintf "Option%04d" (OptionRecord.sysRandom.Next(9999))
+            OptionName  = sprintf "Option%03d" (OptionRecord.sysRandom.Next(999))
             Expiry      = (DateTime.Now.AddMonths(OptionRecord.sysRandom.Next(2, 12))).Date
             Strike      =  60.0 (*OptionRecord.sysRandom.NextDouble() * 60.*)
             CallOrPutFlag = 
