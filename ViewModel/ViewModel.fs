@@ -1,20 +1,24 @@
 ﻿//module MARSApp.ViewModel.ViewModel
-namespace ViewModel
-open Model
 //open MARSApp.ViewModel.ViewModelBase
 //open MARSApp.ViewModel.ConfigurationViewModel
 //open MARSApp.ViewModel.OptionViewModel
 //open MARSApp.ViewModel.SimpleCommand
-
 //open MARSApp.Model.OptionModel
 
+namespace ViewModel
+
+open Model
+open System
 open System.Collections.ObjectModel
+open LiveCharts
+open LiveCharts.Wpf
+open LiveCharts.Defaults
+
 
 type ViewModel() =
     inherit ViewModelBase()
 
     let summary = 10
-    let pieChart = 7
 
     let calculationParameters   = ObservableCollection<ConfigurationViewModel>()
     let marketDataParameters    = ObservableCollection<ConfigurationViewModel>()
@@ -43,27 +47,32 @@ type ViewModel() =
         calculationParameters.Add(ConfigurationViewModel { Key = "option::steps"; Value = "200" })
         calculationParameters.Add(ConfigurationViewModel { Key = "option::seed"; Value = "5" })
 
-    //do
-    //    summary.Add(7)
-    
 
-    //let calculateFun _ = do
-    //        trades |> Seq.iter(fun trade -> trade.Calculate(getDataConfiguration (), getCalculationConfiguration ()))
-    //        refreshSummary()
+    (* charting *)
+    let chartSeries = SeriesCollection()
+    let predefinedChartFunctions = [| (fun x -> sin x); (fun x -> x); (fun x -> 2.*x); (fun x -> 2.*x - 3.) |] 
+    let addChartSeriesFun _ =
+        do
+            let ls = LineSeries()
+            let multiplier = System.Random().NextDouble()
+            let mapFun = predefinedChartFunctions.[ System.Random().Next(predefinedChartFunctions.Length) ]
+            ls.Title <- sprintf "Test series %0.2f" multiplier
+            //let series = seq { for i in 1 .. 100 do yield (0.01 * multiplier * double i) }
+            let series = seq { for i in 1 .. 250 do float i }
+            let a = (Seq.map mapFun series)
+            ls.Values <- ChartValues<float> a
+            chartSeries.Add(ls)
+    let addChartSeries = SimpleCommand addChartSeriesFun
+    (* add a few series for a good measure *)
+    do
+        addChartSeriesFun ()
+        addChartSeriesFun ()
 
-    //let calculate = SimpleCommand calculateFun
+    //let clearSeries _ = chartSeries.Clear()
+    let clearChartSeries = SimpleCommand (fun _ -> chartSeries.Clear ())
 
 
 
-    //let calculateOptionsFun _ = do
-    //        options |> Seq.iter(fun option -> option.Calculate(getDataConfiguration (), getCalculationConfiguration ()))
-    //        //refreshSummary()
-
-    //let calculateOptions = SimpleCommand calculateOptionsFun
-    //let addOption = SimpleCommand(fun _ -> 
-    //        let currentConfig = getCalculationConfiguration ()
-    //        OptionRecord.Random currentConfig |> OptionViewModel |> options.Add
-    //        )
 
     (* option commands *)
     let addOption = SimpleCommand(fun _ -> 
@@ -81,8 +90,9 @@ type ViewModel() =
     (* Portolio's summary *)
     member this.Summary = summary
 
-    (* Charting *)
-    member this.PieChart = pieChart
+    (* charting *)
+    member this.ChartSeries = chartSeries
+    member this.AddChartSeries = addChartSeries
 
     (* Parameters *)
     member this.MarketDataParameters = marketDataParameters
