@@ -10,12 +10,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:View"
     xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
     mc:Ignorable="d"
     Title="MARS App - Market And Risk Simulation Application"
     Height="Auto"
-    Width="1200">
+    Width="1200" WindowStartupLocation="CenterScreen">
     <!--TextElement.Foreground="{DynamicResource MaterialDesignBody}"-->
+    <!--Background="#FF252525"-->
     <!--Background="{DynamicResource MaterialDesignPaper}"-->
     <!--FontFamily="{DynamicResource MaterialDesignFont}"-->
 
@@ -106,78 +108,25 @@
                     </materialDesign:Card>
 
                     <!--Portfolio Wieght-->
-                    <materialDesign:Card Grid.Row="1"  Margin="14,14,14,0">
+                    <materialDesign:Card Grid.Row="1"  Margin="14,14,14,0" UniformCornerRadius="7">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="160"/>
-                                <ColumnDefinition Width="160"/>
-                                <ColumnDefinition Width="160"/>
-                            </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Text="Portfolio Weight"/>
-
-                            <!-- action buttons -->
-                            <StackPanel Grid.Column="0" Grid.Row="1">
+                            
+                            <Border Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Background="White" BorderBrush="Gray" CornerRadius="12">
                                 <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0" Grid.Row="0">
-                                        <Button Margin="6,3" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding AddChartSeries}" Content="Add random series"/>
-                                    </Grid>
-                                    <Grid Grid.Column="0" Grid.Row="1">
-                                        <Button Margin="6,3" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding AddGBMSeries}" Content="Simulate GBM"/>
-                                    </Grid>
-                                    <Grid Grid.Column="0" Grid.Row="2">
-                                        <Button Margin="6,3" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding ClearChartSeries}" Content="Clear"/>
-                                    </Grid>
-
-                                    <Grid Grid.Column="1" Grid.Row="1">
-                                        <!--<Border BorderBrush="Gray" BorderThickness="0 0 0 1">
-                                            <TextBlock Text="Design com WPF" VerticalAlignment="Center" Margin="15" 
-                       Foreground="White" FontSize="24"/>
-                                        </Border>
-                                        <Border Grid.Row="1" Width="500" Height="300" VerticalAlignment="Top" 
-                HorizontalAlignment="Left" Margin="20" Background="White"
-                BorderBrush="Gray" CornerRadius="12">
-                                            <Grid>
-                                                <TextBlock Text="Custom Bar Chart" Margin="10" FontSize="15"/>
-                                                <StackPanel Orientation="Horizontal" Height="200" VerticalAlignment="Bottom">
-                                                    <local:Bar Background="#FF4455AA" MaxValue="100" Color="#FF88AA55" Value="50" Margin="5"/>
-                                                    <local:Bar VerticalAlignment="Bottom" Height="100" MaxValue="100" Color="#FF442266" Value="35" Margin="5"/>
-                                                    <local:Bar Background="#FF4455AA" MaxValue="400" Color="#FF3352" Value="130" Margin="5"/>
-                                                    <local:Bar MaxValue="100" Color="#FF4611BB" Value="18" Margin="5"/>
-                                                </StackPanel>
-                                            </Grid>
-                                        </Border>-->
-
-                                        <!--<lvc:CartesianChart Name="One" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Width="Auto" Height="Auto" Series="{Binding ChartSeries}" Margin="0,0,-326,-277" ></lvc:CartesianChart>-->
-                                        <!--<lvc:PieChart LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}">
-                                            <lvc:PieChart.Series>
-                                                <lvc:PieSeries Title="Maria" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel}"/>
-                                                <lvc:PieSeries Title="Charles" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                                <lvc:PieSeries Title="Frida" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                                <lvc:PieSeries Title="Frederic" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                            </lvc:PieChart.Series>
-                                        </lvc:PieChart>-->
-                                    </Grid>
+                                    <StackPanel Orientation="Horizontal" Height="200">
+                                        <local:BarChart Background="#FF4455AA" MaxValue="100" Color="#FF88AA55" Value="{Binding Summary}" Margin="5"/>
+                                        <local:BarChart VerticalAlignment="Bottom" Height="100" MaxValue="100" Color="#FF442266" Value="35" Margin="5"/>
+                                        <local:BarChart Background="#FF4455AA" MaxValue="400" Color="#FF3352" Value="130" Margin="5"/>
+                                        <local:BarChart MaxValue="100" Color="#FF4611BB" Value="18" Margin="5"/>
+                                    </StackPanel>
                                 </Grid>
-                            </StackPanel>
+                            </Border>
 
                             <!--<lvc:CartesianChart Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Width="900" Height="600" Series="{Binding ChartSeries}" />-->
                             <!--<lvc:PieChart Grid.Row="1" LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}">

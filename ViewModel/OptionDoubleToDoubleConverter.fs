@@ -14,11 +14,12 @@ type OptionDoubleToDoubleConverter() =
     interface IValueConverter with
         member this.Convert (value : obj, _ : Type, _ : obj, _ : CultureInfo) =
             match value with
-             | null -> null
-             | :? option<float> as optionValue -> 
-                match optionValue with 
-                | Some v -> box v
-                | None -> null
+                | null -> null
+                | :? option<float> as optionValue -> 
+                    match optionValue with 
+                    | Some v -> box v
+                    | None -> null
+                | _ -> null
                 
 
         member this.ConvertBack (_ : obj, _ : Type, _ : obj, _ : CultureInfo) =

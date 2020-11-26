@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:View"
              mc:Ignorable="d" 
-             MinWidth="20" Width="Auto" Loaded="UserControl_Loaded">
+             MinWidth="50" Width="Auto" Loaded="UserControl_Loaded">
     <Grid SizeChanged="Grid_SizeChanged">
         <Grid Background="{Binding Background, ElementName=border}" Opacity=".3"/>
         <Border x:Name="border" Background="{Binding Color}" VerticalAlignment="Bottom" Height="{Binding BarHeight}"/>
