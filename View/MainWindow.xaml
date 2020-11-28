@@ -396,6 +396,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Text="Some chart:"/>
+
                                 <lvc:CartesianChart Name="One"
                                                     Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"
                                                     Width="900" Height="600"

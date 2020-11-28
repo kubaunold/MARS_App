@@ -93,6 +93,20 @@ type ViewModel() =
     let clearOptions        = SimpleCommand(fun _ -> options.Clear())
     let recalculateOptions  = SimpleCommand(fun _ -> options |> Seq.iter(fun option -> option.Calculate(getMarketDataParameters(), getCalculationParameters())))
 
+    let countCall =
+        options
+        |> Seq.takeWhile (fun option -> option.CallOrPutFlag = Call)
+        |> Seq.length
+
+    let countPut =
+        options
+        |> Seq.takeWhile (fun option -> option.CallOrPutFlag = Put)
+        |> Seq.length
+
+    let countOptions = countCall + countPut
+
+
+
     (* Portolio's summary *)
     member this.Summary = summary
 
@@ -113,6 +127,9 @@ type ViewModel() =
 
     (* Options *)
     member this.Options = options
+    member this.CountCall = countCall
+    member this.CountPut = countPut
+    member this.CountOptions = countOptions
 
 
 
