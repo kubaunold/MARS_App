@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 //using MARS_App.ViewModel;
 
 using LiveCharts;
@@ -27,9 +28,34 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
-            //PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+
+
+
+            //DispatcherTimer timer = new DispatcherTimer(TimeSpan.FromSeconds(1.0), DispatcherPriority.Normal, delegate
+            //{
+            //    double newValue = 0.0;
+
+            //                //double currentValue = (double)GetValue(ValueProperty);
+
+            //                if (BarChart == double.MaxValue)
+            //    {
+            //        newValue = 0.0;
+            //    }
+            //    else
+            //    {
+            //        newValue = BarChart.ValueProperty += 1.0;
+            //    }
+
+            //    SetValue(ValueProperty, newValue);
+            //}, Dispatcher);
+
+
+
+
             DataContext = new ViewModel.ViewModel();
         }
+
+
 
         //public Func<ChartPoint, string> PointLabel { get; set; }
 
@@ -51,6 +77,6 @@ namespace View
         //}
     }
 
-   
+
 
 }

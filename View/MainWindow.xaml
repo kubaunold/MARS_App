@@ -1,4 +1,6 @@
-﻿<Window x:Class="View.MainWindow"
+﻿<Window 
+    x:Name="MyWindow"
+    x:Class="View.MainWindow"
     TextElement.FontWeight="Regular"
     TextElement.FontSize="13"
     TextOptions.TextFormattingMode="Ideal"
@@ -81,6 +83,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -107,6 +110,8 @@
                         </Grid>
                     </materialDesign:Card>
 
+
+
                     <!--Portfolio Wieght-->
                     <materialDesign:Card Grid.Row="1"  Margin="14,14,14,0" UniformCornerRadius="7">
                         <Grid>
@@ -120,10 +125,10 @@
                             <Border Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Background="White" BorderBrush="Gray" CornerRadius="12">
                                 <Grid>
                                     <StackPanel Orientation="Horizontal" Height="200">
-                                        <local:BarChart Background="#FF4455AA" MaxValue="100" Color="#FF88AA55" Value="{Binding Summary}" Margin="5"/>
-                                        <local:BarChart VerticalAlignment="Bottom" Height="100" MaxValue="100" Color="#FF442266" Value="35" Margin="5"/>
-                                        <local:BarChart Background="#FF4455AA" MaxValue="400" Color="#FF3352" Value="130" Margin="5"/>
-                                        <local:BarChart MaxValue="100" Color="#FF4611BB" Value="18" Margin="5"/>
+                                        <!--<local:BarChart Background="#FF4455AA" MaxValue="100" Color="#FF88AA55" Value="{Binding Summary}" Margin="5"/>-->
+                                        <local:BarChart VerticalAlignment="Bottom" Height="100" MaxValue="100" Color="#FF442266" Value="{Binding ElementName=BarChart, Path=Value}" Margin="5"/>
+                                        <!--<local:BarChart Background="#FF4455AA" MaxValue="400" Color="#FF3352" Value="130" Margin="5"/>-->
+                                        <!--<local:BarChart MaxValue="100" Color="#FF4611BB" Value="18" Margin="5"/>-->
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -142,6 +147,23 @@
                                 </lvc:PieChart.Series>
                             </lvc:PieChart>-->
                         </Grid>
+                    </materialDesign:Card>
+                    
+                    <!--bar charts with value binding-->
+                    <materialDesign:Card Grid.Row="2" Margin="14,14,14,0" UniformCornerRadius="7">
+                        <!-- items -->
+                        <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding BarChartNumbers}" Margin="6">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <local:BarChart VerticalAlignment="Bottom" Height="100" MaxValue="100" Color="#FF442266" Value="{Binding Value}" Margin="5"/>
+                                        <!--<Button Width="50" Command="{Binding DataContext.RemoveMarketData, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3" Background="Red">✖</Button>-->
+                                        <!--<TextBox Width="300" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding Key}"/>-->
+                                        <!--<TextBox Width="150" Margin="4" Text="{Binding Value}"/>-->
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </materialDesign:Card>
                 </Grid>
             </TabItem>

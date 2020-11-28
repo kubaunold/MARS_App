@@ -18,10 +18,11 @@ open LiveCharts.Defaults
 type ViewModel() =
     inherit ViewModelBase()
 
-    let summary = 10
+    let summary = 10.3
 
     let calculationParameters   = ObservableCollection<ConfigurationViewModel>()
     let marketDataParameters    = ObservableCollection<ConfigurationViewModel>()
+    let barChartNumbers         = ObservableCollection<ConfigurationViewModel>()
     let options                 = ObservableCollection<OptionViewModel>()
 
     let getMarketDataParameters() = marketDataParameters |> Seq.map (fun conf -> (conf.Key , conf.Value)) |> Map.ofSeq
@@ -38,6 +39,7 @@ type ViewModel() =
         //marketDataParameters.Add(ConfigurationViewModel { Key = "stock::drift"; Value = "4.20" }) //thats interestrate
         marketDataParameters.Add(ConfigurationViewModel { Key = "stock::volatility"; Value = "0.20" })
 
+
         calculationParameters.Add(ConfigurationViewModel { Key = "monteCarlo::runs"; Value = "100" })
         calculationParameters.Add(ConfigurationViewModel { Key = "valuation::baseCurrency"; Value = "USD" })
         calculationParameters.Add(ConfigurationViewModel { Key = "valuation::knownCurrencies"; Value = "USD PLN EUR GBP" })
@@ -46,6 +48,10 @@ type ViewModel() =
         calculationParameters.Add(ConfigurationViewModel { Key = "valuation::deferredHaircut"; Value = "1.5" })
         calculationParameters.Add(ConfigurationViewModel { Key = "option::steps"; Value = "200" })
         calculationParameters.Add(ConfigurationViewModel { Key = "option::seed"; Value = "5" })
+
+        barChartNumbers.Add(ConfigurationViewModel{Key = "one"; Value="1"})
+        barChartNumbers.Add(ConfigurationViewModel{Key = "twenty"; Value="20"})
+        barChartNumbers.Add(ConfigurationViewModel{Key = "seventy-one"; Value="71.12"})
 
 
     (* charting *)
@@ -97,6 +103,7 @@ type ViewModel() =
     (* Parameters *)
     member this.MarketDataParameters = marketDataParameters
     member this.CalculationParameters = calculationParameters
+    member this.BarChartNumbers = barChartNumbers
 
     (* commands *)
     member this.AddOption = addOption
