@@ -145,6 +145,8 @@ module Others =
     type Class1() = 
         member this.X = "F#"
 
+
+
 (*
 module YahooFinance =
     open System

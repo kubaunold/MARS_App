@@ -1,6 +1,7 @@
 ﻿<Window 
     x:Name="MyWindow"
     x:Class="View.MainWindow"
+    xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
     TextElement.FontWeight="Regular"
     TextElement.FontSize="13"
     TextOptions.TextFormattingMode="Ideal"
@@ -13,7 +14,6 @@
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:View"
-    xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
     mc:Ignorable="d"
     Title="MARS App - Market And Risk Simulation Application"
     Height="Auto"
@@ -96,6 +96,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="160"/>
@@ -105,8 +106,9 @@
                             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Text="Available Funds:"/>
                             <TextBlock Grid.Row="1" Grid.Column="1" Width="100" Margin="4" Style="{DynamicResource SmallHeader}" Text="Value"/>
                             <TextBlock Grid.Row="1" Grid.Column="2" Width="100" Margin="4" Style="{DynamicResource SmallHeader}" Text="Currency"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Width="100" Style="{DynamicResource AmountOfMoney}" Text="{Binding Summary}"/>
-                            <TextBlock Grid.Row="2" Grid.Column="2" Width="100" Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="None"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Width="100" Style="{DynamicResource AmountOfMoney}" Text="1000"/>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Width="100" Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="$"/>
+                            <!--<TextBlock Grid.Row="3" Grid.Column="1" Width="100" Style="{DynamicResource AmountOfMoney}" Text="{Binding CountOptions}"/>-->
                         </Grid>
                     </materialDesign:Card>
 
@@ -118,53 +120,42 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-
-                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Text="Portfolio Weight"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Text="Portfolio Wieght:"/>
                             
-                            <Border Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Background="White" BorderBrush="Gray" CornerRadius="12">
-                                <Grid>
-                                    <StackPanel Orientation="Horizontal" Height="200">
-                                        <!--<local:BarChart Background="#FF4455AA" MaxValue="100" Color="#FF88AA55" Value="{Binding Summary}" Margin="5"/>-->
-                                        <local:BarChart VerticalAlignment="Bottom" Height="100" MaxValue="100" Color="#FF442266" Value="{Binding ElementName=BarChart, Path=Value}" Margin="5"/>
-                                        <!--<local:BarChart Background="#FF4455AA" MaxValue="400" Color="#FF3352" Value="130" Margin="5"/>-->
-                                        <!--<local:BarChart MaxValue="100" Color="#FF4611BB" Value="18" Margin="5"/>-->
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="4" Style="{DynamicResource SmallHeader}" Text="Number of Call Options"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="4" Style="{DynamicResource SmallHeader}" Text="{Binding CallOptions}"/>
 
-                            <!--<lvc:CartesianChart Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Width="900" Height="600" Series="{Binding ChartSeries}" />-->
-                            <!--<lvc:PieChart Grid.Row="1" LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}">
-                                <lvc:PieChart.Series>
-                                    <lvc:PieSeries Title="Maria" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel}"/>
-                                    <lvc:PieSeries Title="Charles" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                    <lvc:PieSeries Title="Frida" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                    <lvc:PieSeries Title="Frederic" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                </lvc:PieChart.Series>
-                            </lvc:PieChart>-->
+                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="4" Style="{DynamicResource SmallHeader}" Text="Number of Put Options"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="4" Style="{DynamicResource SmallHeader}" Text="{Binding PutOptions}"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Margin="4" Style="{DynamicResource SmallHeader}" Text="Total number of Options"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Margin="4" Style="{DynamicResource SmallHeader}" Text="{Binding CountOptions}"/>
                         </Grid>
+
                     </materialDesign:Card>
                     
                     <!--bar charts with value binding-->
-                    <materialDesign:Card Grid.Row="2" Margin="14,14,14,0" UniformCornerRadius="7">
-                        <!-- items -->
+                    <!--<materialDesign:Card Grid.Row="2" Margin="14,14,14,0" UniformCornerRadius="7">
+                        --><!-- items --><!--
                         <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding BarChartNumbers}" Margin="6">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <local:BarChart VerticalAlignment="Bottom" Height="100" MaxValue="100" Color="#FF442266" Value="{Binding Value}" Margin="5"/>
-                                        <!--<Button Width="50" Command="{Binding DataContext.RemoveMarketData, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3" Background="Red">✖</Button>-->
-                                        <!--<TextBox Width="300" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding Key}"/>-->
-                                        <!--<TextBox Width="150" Margin="4" Text="{Binding Value}"/>-->
+
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                    </materialDesign:Card>
+                    </materialDesign:Card>-->
                 </Grid>
             </TabItem>
 
@@ -174,7 +165,6 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <!--options valued by Black-Scholes Model-->
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -210,13 +200,14 @@
 
                                 <!--action buttons-->
                                 <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
-                                    <Button Style="{DynamicResource NormalButton}" ClickMode="Press"
-                                            Command="{Binding AddCalcParameter}"
+                                    <Button ClickMode="Press"
+                                            Margin="5"
+                                            Command="{Binding AddMarketData}"
                                             Content="Add New"/>
-                                    <Button Style="{DynamicResource NormalButton}"
-                                        Command="{Binding ClearAllMarketParameters}"
+                                    <Button 
+                                        Command="{Binding ClearAllMarketData}"
+                                        Margin="5"
                                         Background="Red"
-                                        Foreground="Black"
                                         Content="Clear All"
                                         ClickMode="Press"/>
                                 </StackPanel>
@@ -248,6 +239,88 @@
                                             <DataTemplate >
                                                 <StackPanel Orientation="Horizontal">
                                                     <Button Width="50" Command="{Binding DataContext.RemoveMarketData, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3" Background="Red">✖</Button>
+                                                    <TextBox Width="300" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding Key}"/>
+                                                    <TextBox Width="150" Margin="4" Text="{Binding Value}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+
+
+                                </Grid>
+
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <!--calculation parameters-->
+                        <materialDesign:Card Grid.Row="1" Margin="14,14,14,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- card header -->
+                                <TextBlock 
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    Margin="4" Width="auto" HorizontalAlignment="Center"
+                                    Grid.Row="0"
+                                    Grid.ColumnSpan="2">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Style="{DynamicResource MaterialDesignToolTip}">
+                                            Parameters that help configure the calculation process.
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+            Calculation Parameters
+                                </TextBlock>
+
+                                <!--action buttons-->
+                                <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+                                    <Button ClickMode="Press"
+                                            Margin="5"
+                                            Command="{Binding AddCalcParameter}"
+                                            Content="Add New"/>
+                                    <Button 
+                                        Command="{Binding ClearCalcParameter}"
+                                        Margin="5"
+                                        Background="Red"
+                                        Content="Clear All"
+                                        ClickMode="Press"/>
+                                </StackPanel>
+
+                                <Grid Grid.Column="1" Grid.Row="1">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Key and Value for Configuration Parameters -->
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Width="140" Margin="4" FontWeight="Bold" Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="Key"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Width="140" Margin="4" FontWeight="Bold" Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="Value"/>
+
+                                    <!-- items -->
+                                    <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding CalculationParameters}" Margin="6">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button Width="50" Command="{Binding DataContext.RemoveCalcParameter, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}" FontSize="10" Margin="3" Background="Red">✖</Button>
                                                     <TextBox Width="300" Margin="4" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding Key}"/>
                                                     <TextBox Width="150" Margin="4" Text="{Binding Value}"/>
                                                 </StackPanel>
@@ -401,7 +474,14 @@
                                                     Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"
                                                     Width="900" Height="600"
                                                     Grid.ColumnSpan="2"
-                                                    Series="{Binding ChartSeries}" />
+                                                    Series="{Binding ChartSeries}">
+                                    <lvc:CartesianChart.AxisX>
+                                        <lvc:Axis Title="Days since the beginning of stock's history" ></lvc:Axis>
+                                    </lvc:CartesianChart.AxisX>
+                                    <lvc:CartesianChart.AxisY>
+                                        <lvc:Axis Title="Value of the stock" ></lvc:Axis>
+                                    </lvc:CartesianChart.AxisY>
+                                </lvc:CartesianChart>
                             </Grid>
                         </materialDesign:Card>
                     </Grid>

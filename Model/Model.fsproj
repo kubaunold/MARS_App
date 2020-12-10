@@ -47,10 +47,14 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="ConfigurationModel.fs" />
     <Compile Include="OptionModel.fs" />
+    <Compile Include="SummaryModel.fs" />
     <Compile Include="Library1.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Foogle.Charts">
+      <HintPath>..\packages\Foogle.Charts.0.0.5\lib\net40\Foogle.Charts.dll</HintPath>
+    </Reference>
     <Reference Include="FSharp.Charting">
       <HintPath>..\packages\FSharp.Charting.2.1.0\lib\net45\FSharp.Charting.dll</HintPath>
     </Reference>

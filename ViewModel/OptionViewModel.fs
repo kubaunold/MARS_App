@@ -49,6 +49,12 @@ type OptionViewModel(input : OptionRecord) =
             userInput <- {userInput with StockPrice = x }
             base.Notify("StockPrice")
 
+    member this.UnderlyingStock
+        with get() = userInput.UnderlyingStock
+        and set(x) = 
+            userInput <- {userInput with UnderlyingStock = x }
+            base.Notify("UnderlyingStock")
+
     (* Invoke the option valuation using Black-Scholes Model *)
     member this.Calculate(marketData: MarketData, calculationParameters: CalculationParameters) =
         
@@ -62,6 +68,7 @@ type OptionViewModel(input : OptionRecord) =
                         Strike          = this.Strike
                         CallOrPutFlag   = this.CallOrPutFlag
                         StockPrice      = this.StockPrice
+                        UnderlyingStock = this.UnderlyingStock
                     }
                 MarketData              = marketData
                 CalculationParameters   = calculationParameters
