@@ -39,6 +39,7 @@ type ViewModel() =
         marketDataParameters.Add(ConfigurationViewModel { Key = "stock::price"; Value = "4.20" })
         //marketDataParameters.Add(ConfigurationViewModel { Key = "stock::drift"; Value = "4.20" }) //thats interestrate
         marketDataParameters.Add(ConfigurationViewModel { Key = "stock::volatility"; Value = "0.20" })
+        marketDataParameters.Add(ConfigurationViewModel { Key = "stock::drift"; Value = "0.20" })
 
 
         calculationParameters.Add(ConfigurationViewModel { Key = "valuation::baseCurrency"; Value = "USD" })
@@ -91,7 +92,7 @@ type ViewModel() =
     let addOption = SimpleCommand(fun _ -> 
         let currentCalculationParameters = getCalculationParameters()
         let currentMarketDataParameters = getMarketDataParameters()
-        let optionToAdd = OptionRecord.Random currentCalculationParameters |> OptionViewModel
+        let optionToAdd = OptionRecord.Random currentCalculationParameters currentMarketDataParameters |> OptionViewModel
         optionToAdd.Calculate(currentMarketDataParameters, currentCalculationParameters)
         options.Add optionToAdd
         

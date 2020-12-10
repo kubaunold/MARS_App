@@ -468,7 +468,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Text="Some chart:"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Text="Stocks' History (generated using GBM):"/>
 
                                 <lvc:CartesianChart Name="One"
                                                     Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"
@@ -490,7 +490,7 @@
 
 
 
-            <TabItem Header="Charts">
+            <!--<TabItem Header="Charts">
                 <materialDesign:Card Grid.Row="1" Grid.ColumnSpan="1" Margin="14,14,14,0">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -502,22 +502,17 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Text="Some chart:"/>
-                        <!--<lvc:CartesianChart Name="Obi" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Width="Auto" Height="Auto" Series="{Binding ChartSeries}" Margin="0,0,-326,-277" ></lvc:CartesianChart>-->
                     </Grid>
                 </materialDesign:Card>
-
-
-                <!--This is where the preview will be drawn to screen.-->
             </TabItem>
             <TabItem Header="Resources">
                 This is where the resources { graphic files, fonts, data files }
             </TabItem>
             <TabItem Header="Code Library">
                 This is where the user can save re-usable bits of code. Useful when adding intel barcodes or Address blocks etc...
-            </TabItem>
+            </TabItem>-->
+            
         </TabControl>
-
-
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2">
             Items
         </StatusBar>

@@ -23,18 +23,18 @@ type Stock =
     }
     (* Simple utility method for creating a random option. *)
     static member sysRandom = System.Random()
-    static member Random(configuration : CalculationParameters) =
+    static member Random (calc: CalculationParameters) (market : MarketData) =
         let rnd  = System.Random()
-        (* Below OptionRecord type  will be returned *)
+        (* Below StockRecord type  will be returned *)
         {
             StockHistory =
-                //generates list of n Uniform RVs from interval [0,1]; here it's [0,1) I guess
+                //generates list of n Uniform RVs from interval [0,1]; here it's [0,1)
                 let genRandomNumbersNominalInterval (count:int) (seed:int) : float list =
                     let rnd = System.Random(seed)
                     List.init count (fun _ -> rnd.NextDouble())
 
                 //input: UniformRM need to be from interval (0,1]
-                //input: steps MUST BE EVEN!
+                //input: steps must be even
                 //output: NormalRV have mean=0 and standard_deviation=1
                 let normalizeRec (uniformList:float list) (n:int) : float list =
                     let rec buildNormalList (normalList:float list) =
@@ -64,12 +64,34 @@ type Stock =
                     stockPricesList
 
                 //let count = 1000
-                let steps   = 250 //must be EVEN!
-                let price   = System.Random().NextDouble() * 10.
-                let drift   = System.Random().NextDouble()
-                let vol     = System.Random().NextDouble()
-                let years   = System.Random().NextDouble()
-                let seed    = System.Random().Next()
+                //let steps   = 250 //must be EVEN!
+                let steps =
+                    match calc.TryFind "option::steps" with
+                    | Some steps -> int steps
+                    | None -> 200 // default 200 steps
+                //let price   = System.Random().NextDouble() * 10.
+                let price =
+                    match market.TryFind "stock::price" with
+                    | Some price -> float price
+                    | None -> 6.7 // default 6.7$ for price
+                //let drift   = System.Random().NextDouble()
+                //let drift = 0.2
+                let drift =
+                    match market.TryFind "stock::drift" with
+                    | Some drift -> float drift
+                    | None -> 0.4 // default 6.7$ for price
+                //let vol     = System.Random().NextDouble()
+                let vol =
+                    match market.TryFind "stock::volatility" with
+                    | Some vol -> float vol
+                    | None -> 0.2
+                //let years   = System.Random().NextDouble()
+                let years = 1.0
+                //let seed    = System.Random().Next()
+                let seed =
+                    match calc.TryFind "option::seed" with
+                    | Some seed -> int seed
+                    | None -> 5 // default
                 let series  = simulateGBM 1 steps price drift vol years seed
                 
                 series  // return this float list
@@ -89,20 +111,33 @@ type OptionRecord =
 
     (* Simple utility method for creating a random option. *)
     static member sysRandom = System.Random()
-    static member Random(configuration : CalculationParameters) =
+    static member Random (calc : CalculationParameters) (market : MarketData) =
         let rnd  = System.Random()
         (* Below OptionRecord type  will be returned *)
         {
             OptionName      = sprintf "Option%03d" (OptionRecord.sysRandom.Next(999))
             Expiry          = (DateTime.Now.AddMonths(OptionRecord.sysRandom.Next(2, 12))).Date
-            Strike          =  60.0 (*OptionRecord.sysRandom.NextDouble() * 60.*)
+            //Strike          =  60.0 (*OptionRecord.sysRandom.NextDouble() * 60.*)
+            Strike          =
+                let s =
+                    match market.TryFind "stock::price" with
+                    | Some price -> float price
+                    | None -> 6.70  // default 6.70$ for stock price
+                s*1.1   //Strike price is 110% of stock price
+            
             CallOrPutFlag   = 
                 if rnd.Next()%2 |> System.Convert.ToBoolean then
                     Call
                 else
                     Put
-            StockPrice      = 58.60
-            UnderlyingStock = Stock.Random(configuration: CalculationParameters)
+            
+            StockPrice      =
+                let s =
+                    match market.TryFind "stock::price" with
+                    | Some price -> float price
+                    | None -> 6.70  // default 6.70$ for stock price
+                s
+            UnderlyingStock = Stock.Random (calc: CalculationParameters) (market : MarketData)
         }
 
 
